@@ -15,6 +15,7 @@ const assignment = {
 };
 
 function Lab5(app) {
+
   app.post("/a5/todos", (req, res) => {
     const newTodo = {
       ...req.body,
@@ -28,6 +29,18 @@ function Lab5(app) {
     const newTodo = {
       id: new Date().getTime(),
       title: "New Todo",
+      completed: false,
+    };
+    todos.push(newTodo);
+    res.json(todos);
+  });
+
+  app.get("/a5/todos/create/:newTitle", (req, res) => {
+    const { newTitle } = req.params;
+    const newTodo = {
+      id: new Date().getTime(),
+      title: newTitle,
+      description: "",
       completed: false,
     };
     todos.push(newTodo);
@@ -52,6 +65,26 @@ function Lab5(app) {
       return;
     }
     todo.title = newTitle;
+    res.json(todos);
+  });
+  app.get("/a5/todos/:id/completed/:completed", (req, res) => {
+    const { id, completed } = req.params;
+    const todo = todos.find((todo) => todo.id === parseInt(id));
+    if (!todo) {
+      res.status(404).send("Todo not found");
+      return;
+    }
+    todo.completed = completed;
+    res.json(todos);
+  });
+  app.get("/a5/todos/:id/description/:description", (req, res) => {
+    const { id, description } = req.params;
+    const todo = todos.find((todo) => todo.id === parseInt(id));
+    if (!todo) {
+      res.status(404).send("Todo not found");
+      return;
+    }
+    todo.description = description;
     res.json(todos);
   });
   app.delete("/a5/todos/:id", (req, res) => {
@@ -100,6 +133,16 @@ function Lab5(app) {
   app.get("/a5/assignment/title/:newTitle", (req, res) => {
     const { newTitle } = req.params;
     assignment.title = newTitle;
+    res.send(assignment);
+  });
+  app.get("/a5/assignment/score/:newScore", (req, res) => {
+    const { newScore } = req.params;
+    assignment.score = newScore;
+    res.send(assignment);
+  });
+  app.get("/a5/assignment/completed/:newCompleted", (req, res) => {
+    const { newCompleted } = req.params;
+    assignment.completed = newCompleted;
     res.send(assignment);
   });
 
