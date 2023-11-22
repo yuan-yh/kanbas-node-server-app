@@ -5,42 +5,42 @@ function AssignmentRoutes(app) {
         const assignments = Database.assignments;
         res.json(assignments);
     });
-    app.get("/api/courses/:id", (req, res) => {
+    app.get("/api/assignments/:id", (req, res) => {
         const { id } = req.params;
-        const course = Database.courses.find((course) => course._id === id);
-        if (!course) {
-            res.status(404).send("Course not found");
+        const assignment = Database.assignments.find((assignment) => assignment._id === id);
+        if (!assignment) {
+            res.status(404).send("Assignment not found");
             return;
         }
-        res.json(course);
+        res.json(assignment);
     });
-    app.delete("/api/courses/:id", (req, res) => {
+    app.delete("/api/assignments/:id", (req, res) => {
         const { id } = req.params;
-        const index = Database.courses.findIndex((course) => course._id === id);
+        const index = Database.assignments.findIndex((assignment) => assignment._id === id);
         if (index === -1) {
-            res.status(404).send("Course not found");
+            res.status(404).send("assignment not found");
             return;
         }
-        Database.courses.splice(index, 1);
+        Database.assignments.splice(index, 1);
         res.json(204);
     });
-    app.post("/api/courses", (req, res) => {
-        const newCourse = {
+    app.post("/api/assignments", (req, res) => {
+        const newassignment = {
             ...req.body,
             _id: new Date().getTime().toString(),
         };
-        Database.courses.unshift(newCourse);
-        res.json(newCourse);
+        Database.assignments.unshift(newassignment);
+        res.json(newassignment);
     });
-    app.put("/api/courses/:id", (req, res) => {
+    app.put("/api/assignments/:id", (req, res) => {
         const { id } = req.params;
-        const index = Database.courses.findIndex((course) => course._id === id);
+        const index = Database.assignments.findIndex((assignment) => assignment._id === id);
         if (index === -1) {
-            res.status(404).send("Course not found");
+            res.status(404).send("assignment not found");
             return;
         }
-        Database.courses[index] = {
-            ...Database.courses[index],
+        Database.assignments[index] = {
+            ...Database.assignments[index],
             ...req.body,
         };
         res.json(200);
