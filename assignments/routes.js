@@ -5,6 +5,11 @@ function AssignmentRoutes(app) {
         const assignments = Database.assignments;
         res.json(assignments);
     });
+    app.get("/api/courses/:id/assignments", (req, res) => {
+        const { id } = req.params;
+        const assignments = Database.assignments.filter((assignment) => assignment.course === id);
+        res.json(assignments);
+    });
     app.get("/api/assignments/:id", (req, res) => {
         const { id } = req.params;
         const assignment = Database.assignments.find((assignment) => assignment._id === id);
@@ -31,6 +36,15 @@ function AssignmentRoutes(app) {
         };
         Database.assignments.unshift(newassignment);
         res.json(newassignment);
+    });
+    app.post("/api/courses/:cid/assignments", (req, res) => {
+        const newAssignment = {
+            ...req.body,
+            course: req.params.cid,
+            _id: new Date().getTime().toString(),
+        };
+        Database.assignments.unshift(newAssignment);
+        res.json(newAssignment);
     });
     app.put("/api/assignments/:id", (req, res) => {
         const { id } = req.params;
