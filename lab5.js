@@ -151,18 +151,15 @@ function Lab5(app) {
   app.get("/a5/assignment/description", (req, res) => {
     res.json(assignment.description);
   });
-  app.get("/a5/calculator?a=:a&b=:b", (req, res) => {
+  app.get("/a5/calculator", (req, res) => {
     const { a, b, operation } = req.query;
     let result = 0;
-    switch (operation) {
-      case "add":
-        result = parseInt(a) + parseInt(b);
-        break;
-      case "subtract":
-        result = parseInt(a) - parseInt(b);
-        break;
-      default:
-        result = "Invalid operation";
+    if (operation === "add") {
+      result = parseInt(a) + parseInt(b);
+    } else if (operation === "subtract") {
+      result = parseInt(a) - parseInt(b);
+    } else {
+      result = "Invalid operation";
     }
     res.send(result.toString());
   });
