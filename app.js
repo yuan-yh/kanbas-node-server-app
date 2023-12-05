@@ -3,6 +3,7 @@ import "dotenv/config";
 import session from "express-session";
 
 import express from "express";
+import connectDB from "./config_db.js";
 import EnrollmentRoutes from "./enrollments/routes.js";
 import HelloRoutes from "./hello.js";
 import Lab5 from "./lab5.js";
@@ -17,9 +18,12 @@ import cors from "cors";
 
 // mongoose.connect("mongodb://127.0.0.1:27017/kanbas-cs5610-fa23");
 // mongoose.connect("mongodb://localhost:27017/kanbas-cs5610-fa23");
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://localhost:27017/kanbas-cs5610-fa23"
-mongoose.connect(CONNECTION_STRING);
+// const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://localhost:27017/kanbas-cs5610-fa23"
+// mongoose.connect(CONNECTION_STRING);
+// Connect to MongoDB
+connectDB();
 
+const port = process.env.PORT;
 const app = express();
 app.use(
   cors({
@@ -54,4 +58,4 @@ HelloRoutes(app);
 SectionRoutes(app);
 EnrollmentRoutes(app);
 
-app.listen(4000);
+app.listen(port, () => { console.log(`I am executed once the server successfully starts listening on the port ${port}.`) });
