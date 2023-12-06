@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'https://a6--jazzy-entremet-1fd456.netlify.app'
+    origin: 'https://a6--offer4y.netlify.app'
   })
 );
 
