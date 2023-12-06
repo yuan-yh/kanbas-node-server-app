@@ -14,7 +14,7 @@
     "Server",
     "HTTP"
   ],
-  "author": "Zongyu Wu",
+  "author": "YY",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
